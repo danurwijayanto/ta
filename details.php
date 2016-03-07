@@ -33,10 +33,10 @@
 
 	function scan_interface(){
 		include "function/db.php";
-		$id_if = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.2.2.1.1");
-		$nama_if = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.2.2.1.2");
-		$status_if = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.2.2.1.7");
-		$panjang_if = count($id_if);
+		#$id_if = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.2.2.1.1");
+		#$nama_if = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.2.2.1.2");
+		#$status_if = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.2.2.1.7");
+		#$panjang_if = count($id_if);
 		
 		#for ($i=0; $i<$panjang_if; $i++){
 		#
@@ -58,9 +58,9 @@
 
 	function scan_ip(){
 		include "function/db.php";
-		$list_ip = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.4.20.1.1");
-		$ip_index = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.4.20.1.2");
-		$panjang_ip = count($list_ip);
+		#$list_ip = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.4.20.1.1");
+		#$ip_index = snmpwalk("$GLOBALS[ip]", "public", ".1.3.6.1.2.1.4.20.1.2");
+		#$panjang_ip = count($list_ip);
 		
 		#for ($i=0; $i<$panjang_ip; $i++){
 		#	//echo trim_er("IpAddress: ",$scan_ip['list_ip'][$i]).'||'.trim_er("INTEGER: ",$scan_ip['ip_index'][$i]).'<br>';
@@ -87,6 +87,9 @@
 				FROM  data_interface LEFT JOIN data_ipaddress
 				ON data_interface.interface_index=data_ipaddress.ip_addressindex AND data_interface.id_perangkat=data_ipaddress.id_perangkat
 				WHERE data_interface.id_perangkat=$GLOBALS[id]";
+
+				#SELECT a.*, b.*, d.nama_perangkat FROM data_ipaddress as a RIGHT JOIN squid_history as b on SUBSTRING_INDEX(a.ip_address, '.', 3) = SUBSTRING_INDEX(b.user_ip, '.', 3) LEFT JOIN data_interface as c on a.ip_addressindex = c.interface_index LEFT JOIN data_perangkat as d on c.id_perangkat = d.id_perangkat
+
 
 		//Query Database
 		$hasil = $conn->query($query);

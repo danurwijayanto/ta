@@ -16,7 +16,23 @@
 		}
 	}
 
-	
+	function get_interface(){
+		require("function/db.php");
+
+		$query = "SELECT a.nama_perangkat
+				FROM data_perangkat AS a, data_interface AS b, data_ipaddress AS c, squid_history AS d
+				WHERE a.id_perangkat=1";
+
+		$hasil = $conn->query($query);
+		if ($hasil->num_rows > 0) {
+			while($row = $hasil->fetch_array()) {
+			  $data['nama_perangkat']=$row[0];
+			}
+			return $data;
+		} else {
+	    	return "Tidak Ada Data";
+		}		
+	}
 ?>
 
 
@@ -34,6 +50,7 @@ Log SQUID Proxy<br><br>
 	</tr>
 
 <?php
+	$interface = get_interface();
 	$data = get_log();
 	$i=1;
 	foreach ($data as $data){
@@ -47,7 +64,7 @@ Log SQUID Proxy<br><br>
             <td>".$data['domain_tujuan']."</td>
             <td>".$data['ip_tujuan']."</td>
             <td>".$include."</td>
-            <td></td>
+            <td>".$interface['nama_perangkat']."</td>
             </tr>
 		";
 		$i++;
